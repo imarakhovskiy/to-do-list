@@ -1,0 +1,52 @@
+{
+  "data": {
+    "light": {
+      "id": "001",
+      "textColor": {
+        "error": "#c8280f",
+        "warning": "#d68234",
+        "primary": "#242222",
+        "secondary": "#050404"
+      },
+      "backgroundColor": {
+        "error": "#c8280f",
+        "warning": "#d68234",
+        "main": "#fafdf1",
+        "primary": "#ffffff",
+        "secondary": "#fefefe"
+      },
+      "borderColor": {
+        "primary": "#e3e3e3"
+      },
+      "shadowColor": {
+        "primary": "#b8c1b6",
+        "error": "#c8280f",
+        "warning": "#d68234"
+      }
+    },
+    "dark": {
+      "id": "002",
+      "textColor": {
+        "error": "#c8280f",
+        "warning": "#d68234",
+        "primary": "#fafdf1",
+        "secondary": "#f9ffe8"
+      },
+      "backgroundColor": {
+        "error": "#c8280f",
+        "warning": "#d68234",
+        "main": "#242222",
+        "primary": "#242222",
+        "secondary": "#242222"
+      },
+      "borderColor": {
+        "primary": "#e3e3e3"
+      },
+      "shadowColor": {
+        "primary": "#b8c1b6",
+        "error": "#c8280f",
+        "warning": "#d68234"
+      }
+    }
+  }
+}

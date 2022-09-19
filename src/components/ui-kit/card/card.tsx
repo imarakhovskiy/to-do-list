@@ -4,11 +4,11 @@ export const Card = styled.div`
   display: flex;
   position: relative;
   border-radius: 10px;
-  color: var(--text-color-primary);
-  background-color: var(--background-color-primary);
+  color: ${({ theme }) => theme.textColor.primary};
+  background-color: ${({ theme }) => theme.backgroundColor.primary};
   padding: 10px;
-  border-color: var(--border-color-primary);
+  border-color: ${({ theme }) => theme.borderColor.primary};
   border-width: 1px;
   border-style: solid;
-  box-shadow: var(--shadow-light);
+  box-shadow: ${({ theme }) => theme.shadowColor.primary};
 `;
