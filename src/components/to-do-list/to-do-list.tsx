@@ -5,7 +5,7 @@ interface ListItem {
   name: string;
 }
 
-interface WishlistProps {}
+interface ToDoListProps {}
 
 export const FRIENDS = Array(15)
   .fill(null)
@@ -14,11 +14,11 @@ export const FRIENDS = Array(15)
     name: `Andrew ${index}`,
   }));
 
-export const Wishlist = ({}: WishlistProps) => {
+export const ToDoList = ({}: ToDoListProps) => {
   return (
     <StyledCard>
       <StyledList data={FRIENDS} isItemsDraggable>
-        {(data) => <p className="heading-1">{(data as ListItem).name}</p>}
+        {(data) => <p>{(data as ListItem).name}</p>}
       </StyledList>
     </StyledCard>
   );

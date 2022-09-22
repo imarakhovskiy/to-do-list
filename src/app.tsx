@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ThemeProvider as LibThemeProvider } from "styled-components";
 
-import { Header, PageContentWrapper, Wishlist } from "components";
+import { Header, PageContentWrapper, ToDoList } from "components";
 import { ThemeProvider } from "providers/theme-provider";
 import storage from "storage";
 import { getThemes } from "utils/getThemes";
@@ -29,17 +29,15 @@ function App() {
   }, [themeMode]);
 
   return (
-    themes && (
-      <ThemeProvider theme={themeMode} changeTheme={setThemeMode}>
-        <LibThemeProvider theme={themes[themeMode]}>
-          <GlobalStyle />
-          <Header />
-          <PageContentWrapper>
-            <Wishlist />
-          </PageContentWrapper>
-        </LibThemeProvider>
-      </ThemeProvider>
-    )
+    <ThemeProvider theme={themeMode} changeTheme={setThemeMode}>
+      <LibThemeProvider theme={themes[themeMode]}>
+        <GlobalStyle />
+        <Header />
+        <PageContentWrapper>
+          <ToDoList />
+        </PageContentWrapper>
+      </LibThemeProvider>
+    </ThemeProvider>
   );
 }
 

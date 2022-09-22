@@ -6,14 +6,16 @@ declare module "styled-components" {
   export interface DefaultTheme {
     id: string;
     textColor: {
-      error: string;
+      success: string;
       warning: string;
+      error: string;
       primary: string;
       secondary: string;
     };
     backgroundColor: {
-      error: string;
+      success: string;
       warning: string;
+      error: string;
       main: string;
       primary: string;
       secondary: string;
@@ -23,8 +25,9 @@ declare module "styled-components" {
     };
     shadowColor: {
       primary: string;
-      error: string;
+      success: string;
       warning: string;
+      error: string;
     };
   }
 }

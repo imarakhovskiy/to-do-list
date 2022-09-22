@@ -3,14 +3,16 @@
     "light": {
       "id": "001",
       "textColor": {
-        "error": "#c8280f",
+        "success": "#138c0a",
         "warning": "#d68234",
+        "error": "#c8280f",
         "primary": "#242222",
         "secondary": "#050404"
       },
       "backgroundColor": {
-        "error": "#c8280f",
+        "success": "#138c0a",
         "warning": "#d68234",
+        "error": "#c8280f",
         "main": "#fafdf1",
         "primary": "#ffffff",
         "secondary": "#fefefe"
@@ -20,21 +22,24 @@
       },
       "shadowColor": {
         "primary": "#b8c1b6",
-        "error": "#c8280f",
-        "warning": "#d68234"
+        "success": "#138c0a",
+        "warning": "#d68234",
+        "error": "#c8280f"
       }
     },
     "dark": {
       "id": "002",
       "textColor": {
-        "error": "#c8280f",
+        "success": "#138c0a",
         "warning": "#d68234",
+        "error": "#c8280f",
         "primary": "#fafdf1",
         "secondary": "#f9ffe8"
       },
       "backgroundColor": {
-        "error": "#c8280f",
+        "success": "#138c0a",
         "warning": "#d68234",
+        "error": "#c8280f",
         "main": "#242222",
         "primary": "#242222",
         "secondary": "#242222"
@@ -44,8 +49,9 @@
       },
       "shadowColor": {
         "primary": "#b8c1b6",
-        "error": "#c8280f",
-        "warning": "#d68234"
+        "success": "#138c0a",
+        "warning": "#d68234",
+        "error": "#c8280f"
       }
     }
   }

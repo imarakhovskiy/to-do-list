@@ -1,3 +1,3 @@
 export * from "./header";
-export * from "./wishlist";
+export * from "./to-do-list";
 export * from "./page-content-wrapper";
