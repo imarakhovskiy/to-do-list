@@ -1,5 +1,16 @@
-import styled from "styled-components";
+import styled, {
+  DefaultTheme,
+  FlattenInterpolation,
+  ThemeProps,
+} from "styled-components";
 
-export const StyledListItem = styled.li<{ isDragging: boolean }>`
-  visibility: ${(props) => (props.isDragging ? "hidden" : "visible")};
+interface StyledListItemProps {
+  _isDragging: boolean;
+  _customListItemStyles?: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+}
+
+export const StyledListItem = styled.li<StyledListItemProps>`
+  ${(props) => props._customListItemStyles}
+
+  visibility: ${(props) => (props._isDragging ? "hidden" : "visible")};
 `;

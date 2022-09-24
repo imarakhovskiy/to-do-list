@@ -1,5 +1,3 @@
-import { ButtonHTMLAttributes } from "react";
-
 import {
   ButtonProportion,
   ButtonShadow,
@@ -9,7 +7,8 @@ import {
 } from "./types";
 import { StyledButton } from "./styled";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   proportions?: ButtonProportion;
   shadow?: ButtonShadow;
   border?: ButtonBorder;

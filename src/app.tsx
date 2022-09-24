@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ThemeProvider as LibThemeProvider } from "styled-components";
+import styled, { ThemeProvider as LibThemeProvider } from "styled-components";
 
 import { Header, PageContentWrapper, ToDoList } from "components";
 import { ThemeProvider } from "providers/theme-provider";
@@ -9,13 +9,35 @@ import { getInitialThemeMode } from "utils/getInitialThemeMode";
 import { THEME_STORAGE_KEY } from "constants/theme";
 import { GlobalStyle } from "constants/globalStyles";
 
+export const FRIENDS = [
+  {
+    name: "As a user, I can create a new todo item",
+  },
+  {
+    name: "As a user, I can delete todo items",
+  },
+  {
+    name: "As a user, I can mark todo items as done or undone",
+  },
+  {
+    name: "As a user, I can view all/done list items (filter)",
+  },
+  {
+    name: "As a user, I can view count of the list items (all/done)",
+  },
+  {
+    name: "As a user, I can search todo items by title",
+  },
+  {
+    name: "As a user, I can select todo items and do a batch delete/done/undone actions",
+  },
+];
+
 function App() {
   const [themeMode, setThemeMode] = useState(getInitialThemeMode);
 
   const themes = useMemo(() => {
     const themes = getThemes();
-
-    console.log(themes);
 
     return themes;
   }, []);
@@ -34,7 +56,7 @@ function App() {
         <GlobalStyle />
         <Header />
         <PageContentWrapper>
-          <ToDoList />
+          <StyledToDoList data={FRIENDS} />
         </PageContentWrapper>
       </LibThemeProvider>
     </ThemeProvider>
@@ -42,3 +64,7 @@ function App() {
 }
 
 export default App;
+
+const StyledToDoList = styled(ToDoList)`
+  margin-top: 130px;
+`;

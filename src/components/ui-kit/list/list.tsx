@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { DragLayerMonitor, useDragLayer } from "react-dnd";
 
 import { DragItem, ListDataItem, ListProps } from "./types";
@@ -7,50 +7,65 @@ import { withListWrapper } from "./withListWrapper";
 import { rearrangeDnDList } from "./helpers";
 import { StyledList } from "./styled";
 
-export const List = withListWrapper(
-  ({ data, isItemsDraggable = false, children }: ListProps) => {
-    const [listItemsData, setListItemsData] = useState(data);
+const List = ({
+  data,
+  className,
+  isItemsDraggable = false,
+  children,
+}: ListProps) => {
+  const [listItemsData, setListItemsData] = useState(data);
 
-    const { draggedItem } = useDragLayer((monitor: DragLayerMonitor) => ({
-      draggedItem: monitor.getItem<DragItem>(),
-    }));
+  useEffect(() => {
+    setListItemsData(data);
+  }, [data]);
 
-    const moveListItem = useCallback(
-      (hoverIndex: number) => {
-        setListItemsData((prevDataList) => {
-          if (!prevDataList) {
-            return;
-          }
+  const { draggedItem } = useDragLayer((monitor: DragLayerMonitor) => ({
+    draggedItem: monitor.getItem<DragItem>(),
+  }));
 
-          const newDataList = rearrangeDnDList({
-            dragIndex: draggedItem.index,
-            hoverIndex,
-            dataList: prevDataList,
-          });
+  const moveListItem = useCallback(
+    (hoverIndex: number) => {
+      setListItemsData((prevDataList) => {
+        if (!prevDataList) {
+          return;
+        }
 
-          return newDataList;
+        const newDataList = rearrangeDnDList({
+          dragIndex: draggedItem.index,
+          hoverIndex,
+          dataList: prevDataList,
         });
-      },
-      [draggedItem]
-    );
 
-    const renderListItem = useCallback(
-      (data: ListDataItem, index: number) => {
-        return (
-          <ListItem
-            key={data.id}
-            id={data.id}
-            index={index}
-            isDraggable={isItemsDraggable}
-            moveListItem={moveListItem}
-          >
-            {children?.(data)}
-          </ListItem>
-        );
-      },
-      [isItemsDraggable, children, moveListItem]
-    );
+        return newDataList;
+      });
+    },
+    [draggedItem]
+  );
 
-    return <StyledList>{listItemsData?.map(renderListItem)}</StyledList>;
-  }
-);
+  const renderListItem = useCallback(
+    (data: ListDataItem, index: number) => {
+      return (
+        <ListItem
+          key={data.id}
+          id={data.id}
+          index={index}
+          isDraggable={isItemsDraggable}
+          moveListItem={moveListItem}
+        >
+          {children?.(data)}
+        </ListItem>
+      );
+    },
+    [isItemsDraggable, children, moveListItem]
+  );
+
+  return (
+    <StyledList className={className}>
+      {listItemsData?.map(renderListItem)}
+    </StyledList>
+  );
+};
+
+const WrappedList = withListWrapper(List);
+
+export { WrappedList as List };

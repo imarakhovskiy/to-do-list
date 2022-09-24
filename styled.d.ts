@@ -13,21 +13,26 @@ declare module "styled-components" {
       secondary: string;
     };
     backgroundColor: {
+      main: string;
       success: string;
       warning: string;
       error: string;
-      main: string;
       primary: string;
       secondary: string;
     };
     borderColor: {
-      primary: string;
-    };
-    shadowColor: {
-      primary: string;
       success: string;
       warning: string;
       error: string;
+      primary: string;
+      secondary: string;
+    };
+    shadowColor: {
+      success: string;
+      warning: string;
+      error: string;
+      primary: string;
+      secondary: string;
     };
   }
 }

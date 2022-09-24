@@ -17,15 +17,18 @@ import {
 
 export interface StyledButtonProps {
   _proportions: ButtonProportion;
-  _shadow: ButtonShadow;
   _border: ButtonBorder;
   _variant: ButtonVariant;
   _shape?: ButtonShape;
+  _shadow?: ButtonShadow;
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
   border-radius: 5px;
+  border-style: solid;
   line-height: 0;
+  box-shadow: ${({ theme, _variant }) =>
+    `2px 2px 3px 0px ${theme.shadowColor[_variant]}`};
 
   ${(props) => getButtonByProportionStyles(props._proportions)}
   ${(props) => getButtonByVariantStyles(props._variant)}

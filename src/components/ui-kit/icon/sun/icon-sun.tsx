@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IconProps } from "../types";
+import { IconProps, IconVariant } from "../types";
 import { getIconStylesByVariant } from "../utils";
 
 import { ReactComponent as SunSvg } from "./sun.svg";
@@ -12,7 +12,10 @@ const StyledSunSvg = styled(SunSvg)<IconProps>`
 export const IconSun = ({
   width = "22px",
   height = "22px",
+  variant = IconVariant.Primary,
   ...props
 }: IconProps) => {
-  return <StyledSunSvg width={width} height={height} {...props} />;
+  return (
+    <StyledSunSvg width={width} height={height} variant={variant} {...props} />
+  );
 };

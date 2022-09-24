@@ -7,9 +7,9 @@ import {
   Button,
   ButtonBorder,
   ButtonShadow,
+  ButtonShape,
   IconMoon,
   IconSun,
-  IconVariant,
 } from "components/ui-kit";
 import { strings } from "./strings";
 
@@ -37,10 +37,11 @@ export const ThemeSwitchButton = () => {
     <StyledThemeSwitchButton
       onClick={onThemeToggle}
       title={strings.themeSwitcherTitle}
-      border={ButtonBorder.Primary}
-      shadow={ButtonShadow.Primary}
+      border={ButtonBorder.Light}
+      shadow={ButtonShadow.Default}
+      shape={ButtonShape.Circle}
     >
-      <Icon variant={IconVariant.Primary} />
+      <Icon />
     </StyledThemeSwitchButton>
   );
 };

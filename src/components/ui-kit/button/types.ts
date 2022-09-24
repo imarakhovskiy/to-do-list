@@ -18,11 +18,13 @@ export enum ButtonShape {
 }
 
 export enum ButtonBorder {
-  Primary = "primary",
+  Light = "light",
+  Medium = "medium",
+  Bold = "bold",
   None = "none",
 }
 
 export enum ButtonShadow {
-  Primary = "primary",
+  Default = "default",
   None = "none",
 }

@@ -38,4 +38,18 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.backgroundColor.main};
     line-height: 1;
   }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.borderColor.secondary};
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.borderColor.primary} ;
+    border-radius: 100px;
+  }
 `;

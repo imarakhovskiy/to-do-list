@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { DragSourceMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
+import styled from "styled-components";
 
 import { DropEffect } from "types/drop-types";
 import { DragItem } from "../types";
@@ -9,14 +10,16 @@ import { StyledListItem } from "./styled";
 
 interface ListItemProps {
   children: React.ReactNode;
+  className?: string;
   index?: number;
   id?: string;
   isDraggable?: boolean;
   moveListItem?: (hoverIndex: number) => void;
 }
 
-export const ListItem = ({
+const ListItem = ({
   children,
+  className,
   index,
   id,
   isDraggable = false,
@@ -93,10 +96,15 @@ export const ListItem = ({
   return (
     <StyledListItem
       ref={ref}
-      isDragging={isDragging}
+      className={className}
+      _isDragging={isDragging}
       data-handler-id={handlerId}
     >
       {children}
     </StyledListItem>
   );
 };
+
+export const StyledListItemComp = styled(ListItem)``;
+
+export { StyledListItemComp as ListItem };

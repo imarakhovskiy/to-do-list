@@ -10,21 +10,26 @@
         "secondary": "#050404"
       },
       "backgroundColor": {
+        "main": "#fafdf1",
         "success": "#138c0a",
         "warning": "#d68234",
         "error": "#c8280f",
-        "main": "#fafdf1",
         "primary": "#ffffff",
         "secondary": "#fefefe"
       },
       "borderColor": {
-        "primary": "#e3e3e3"
+        "success": "#92ef8c",
+        "warning": "#d68234",
+        "error": "#c8280f",
+        "primary": "#e3e3e3",
+        "secondary": "cecdcd"
       },
       "shadowColor": {
-        "primary": "#b8c1b6",
         "success": "#138c0a",
         "warning": "#d68234",
-        "error": "#c8280f"
+        "error": "#c8280f",
+        "primary": "#b8c1b6",
+        "secondary": "#050404"
       }
     },
     "dark": {
@@ -45,13 +50,18 @@
         "secondary": "#242222"
       },
       "borderColor": {
-        "primary": "#e3e3e3"
+        "success": "#92ef8c",
+        "warning": "#d68234",
+        "error": "#c8280f",
+        "primary": "#e3e3e3",
+        "secondary": "cecdcd"
       },
       "shadowColor": {
-        "primary": "#b8c1b6",
         "success": "#138c0a",
         "warning": "#d68234",
-        "error": "#c8280f"
+        "error": "#c8280f",
+        "primary": "#b8c1b6",
+        "secondary": "#f9ffe8"
       }
     }
   }

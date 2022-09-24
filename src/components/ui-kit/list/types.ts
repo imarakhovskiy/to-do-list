@@ -8,6 +8,7 @@ export interface DragItem {
 
 export interface ListProps {
   data?: ListDataItem[];
+  className?: string;
   isItemsDraggable?: boolean;
   children?: (data?: unknown) => JSX.Element;
 }

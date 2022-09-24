@@ -1,25 +1,39 @@
-import { StyledCard, StyledList } from "./styled";
+import { useState, useCallback } from "react";
+
+import { getUniqueId } from "utils/getUniqueId";
+import { ToDoItem } from "./components";
+import { StyledAddToDoItem, StyledCard, StyledToDoList } from "./styled";
 
 interface ListItem {
   id: string;
   name: string;
 }
 
-interface ToDoListProps {}
+interface ToDoListProps {
+  className?: string;
+  data?: Omit<ListItem, "id">[];
+}
 
-export const FRIENDS = Array(15)
-  .fill(null)
-  .map((_, index) => ({
-    id: `${index}`,
-    name: `Andrew ${index}`,
-  }));
+export const ToDoList = ({ className, data }: ToDoListProps) => {
+  const [toDoItems, setToDoItem] = useState<ListItem[]>(
+    data?.map((el) => ({ ...el, id: getUniqueId() })) || []
+  );
 
-export const ToDoList = ({}: ToDoListProps) => {
+  const onAddNewItem = useCallback((newToDoItemName: string) => {
+    setToDoItem((oldToDoItems) => [
+      { name: newToDoItemName, id: getUniqueId() },
+      ...oldToDoItems,
+    ]);
+  }, []);
+
   return (
-    <StyledCard>
-      <StyledList data={FRIENDS} isItemsDraggable>
-        {(data) => <p>{(data as ListItem).name}</p>}
-      </StyledList>
+    <StyledCard className={className}>
+      <StyledToDoList data={toDoItems} isItemsDraggable>
+        {(data) => (
+          <ToDoItem name={(data as ListItem).name} onDelete={() => {}} />
+        )}
+      </StyledToDoList>
+      <StyledAddToDoItem onValueSubmit={onAddNewItem} />
     </StyledCard>
   );
 };
