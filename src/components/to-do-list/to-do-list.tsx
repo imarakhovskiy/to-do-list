@@ -11,16 +11,25 @@ interface ToDoListProps {
 }
 
 export const ToDoList = ({ className, data }: ToDoListProps) => {
-  const { toDoItems, synchronizeLists, addNewItem, removeItems } =
-    useToDoList(data);
+  const {
+    toDoItems,
+    synchronizeLists,
+    addNewItem,
+    removeItems,
+    updateItemsState,
+  } = useToDoList(data);
 
   console.log("ToDoList Rerender");
 
   const renderToDoListItems = useCallback(
     (data: unknown) => (
-      <ToDoItem itemData={data as ToDoListItem} removeItems={removeItems} />
+      <ToDoItem
+        itemData={data as ToDoListItem}
+        removeItems={removeItems}
+        updateItemsState={updateItemsState}
+      />
     ),
-    [removeItems]
+    [removeItems, updateItemsState]
   );
 
   return (

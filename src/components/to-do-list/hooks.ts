@@ -31,5 +31,29 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
     );
   }, []);
 
-  return { toDoItems, synchronizeLists, addNewItem, removeItems };
+  const updateItemsState = useCallback(
+    (idsList: string[], newStateValue: boolean) => {
+      const toUpdate = new Set(idsList);
+
+      setToDoItems((oldToDoItems) => {
+        const updatedToDoItemsList = oldToDoItems.map((item) => {
+          if (toUpdate.has(item.id)) {
+            return { ...item, done: newStateValue };
+          }
+          return item;
+        });
+
+        return updatedToDoItemsList;
+      });
+    },
+    []
+  );
+
+  return {
+    toDoItems,
+    synchronizeLists,
+    addNewItem,
+    removeItems,
+    updateItemsState,
+  };
 };

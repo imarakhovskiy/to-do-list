@@ -13,9 +13,9 @@ export const FRIENDS = [
   { done: false, name: "Add Roboto font" },
   { done: false, name: "Set up typography" },
   { done: false, name: "Play with Layout" },
-  { done: false, name: "As a user, I can create a new todo item" },
-  { done: false, name: "As a user, I can delete todo items" },
-  { done: false, name: "As a user, I can mark todo items as done or undone" },
+  { done: true, name: "As a user, I can create a new todo item" },
+  { done: true, name: "As a user, I can delete todo items" },
+  { done: true, name: "As a user, I can mark todo items as done or undone" },
   { done: false, name: "As a user, I can view all/done list items (filter)" },
   {
     done: false,
