@@ -1,8 +1,10 @@
+import { memo, useCallback } from "react";
+
+import { ToDoListItem } from "../../types";
 import {
   ButtonBorder,
   ButtonProportion,
   ButtonShadow,
-  ButtonShape,
   ButtonVariant,
   IconDelete,
   IconVariant,
@@ -15,21 +17,30 @@ import {
 import { strings } from "./strings";
 
 interface ToDoItemProps {
-  name?: string;
-  onDelete?: () => void;
+  itemData: ToDoListItem;
+  removeItems?: (idsList: string[]) => void;
 }
 
-export const ToDoItem = ({ name, onDelete }: ToDoItemProps) => {
+const ToDoItem = ({ itemData, removeItems }: ToDoItemProps) => {
+  const deteleItem = useCallback(() => {
+    if (!removeItems) {
+      return;
+    }
+
+    removeItems([itemData.id]);
+  }, [itemData.id, removeItems]);
+
   return (
     <StyledToDoItem>
-      <ToDoItemDescription title={name}>{name}</ToDoItemDescription>
-      {onDelete && (
+      <ToDoItemDescription title={itemData.name}>
+        {itemData.name}
+      </ToDoItemDescription>
+      {removeItems && (
         <DeleteToDoItemButton
-          onClick={onDelete}
+          onClick={deteleItem}
           title={strings.deleteItemTitle}
           border={ButtonBorder.Light}
           shadow={ButtonShadow.Default}
-          shape={ButtonShape.Circle}
           proportions={ButtonProportion.Small}
           variant={ButtonVariant.Error}
         >
@@ -39,3 +50,7 @@ export const ToDoItem = ({ name, onDelete }: ToDoItemProps) => {
     </StyledToDoItem>
   );
 };
+
+const MemoizedComp = memo(ToDoItem);
+
+export { MemoizedComp as ToDoItem };

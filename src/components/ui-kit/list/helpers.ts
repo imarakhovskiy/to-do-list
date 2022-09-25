@@ -1,9 +1,9 @@
-import { ListDataItem } from "./types";
+import { DataListItem } from "types/list-types";
 
 interface RearrangeDnDListParams {
   dragIndex: number;
   hoverIndex: number;
-  dataList: ListDataItem[];
+  dataList: DataListItem[];
 }
 
 export const rearrangeDnDList = ({

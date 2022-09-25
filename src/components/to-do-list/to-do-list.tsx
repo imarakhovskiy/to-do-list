@@ -1,39 +1,38 @@
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 
-import { getUniqueId } from "utils/getUniqueId";
+import { ToDoListItem } from "./types";
+import { useToDoList } from "./hooks";
 import { ToDoItem } from "./components";
 import { StyledAddToDoItem, StyledCard, StyledToDoList } from "./styled";
 
-interface ListItem {
-  id: string;
-  name: string;
-}
-
 interface ToDoListProps {
   className?: string;
-  data?: Omit<ListItem, "id">[];
+  data?: Omit<ToDoListItem, "id">[];
 }
 
 export const ToDoList = ({ className, data }: ToDoListProps) => {
-  const [toDoItems, setToDoItem] = useState<ListItem[]>(
-    data?.map((el) => ({ ...el, id: getUniqueId() })) || []
-  );
+  const { toDoItems, synchronizeLists, addNewItem, removeItems } =
+    useToDoList(data);
 
-  const onAddNewItem = useCallback((newToDoItemName: string) => {
-    setToDoItem((oldToDoItems) => [
-      { name: newToDoItemName, id: getUniqueId() },
-      ...oldToDoItems,
-    ]);
-  }, []);
+  console.log("ToDoList Rerender");
+
+  const renderToDoListItems = useCallback(
+    (data: unknown) => (
+      <ToDoItem itemData={data as ToDoListItem} removeItems={removeItems} />
+    ),
+    [removeItems]
+  );
 
   return (
     <StyledCard className={className}>
-      <StyledToDoList data={toDoItems} isItemsDraggable>
-        {(data) => (
-          <ToDoItem name={(data as ListItem).name} onDelete={() => {}} />
-        )}
+      <StyledToDoList
+        data={toDoItems}
+        onListItemsOrderChange={synchronizeLists}
+        isItemsDraggable
+      >
+        {renderToDoListItems}
       </StyledToDoList>
-      <StyledAddToDoItem onValueSubmit={onAddNewItem} />
+      <StyledAddToDoItem onValueSubmit={addNewItem} />
     </StyledCard>
   );
 };

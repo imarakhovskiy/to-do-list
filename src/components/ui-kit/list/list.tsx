@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { DragLayerMonitor, useDragLayer } from "react-dnd";
 
-import { DragItem, ListDataItem, ListProps } from "./types";
+import { DataListItem } from "types/list-types";
+import { DragItem, ListProps } from "./types";
 import { ListItem } from "./list-item";
 import { withListWrapper } from "./withListWrapper";
 import { rearrangeDnDList } from "./helpers";
@@ -12,8 +13,10 @@ const List = ({
   className,
   isItemsDraggable = false,
   children,
+  onListItemsOrderChange,
 }: ListProps) => {
   const [listItemsData, setListItemsData] = useState(data);
+  console.log("List Rerender");
 
   useEffect(() => {
     setListItemsData(data);
@@ -36,14 +39,18 @@ const List = ({
           dataList: prevDataList,
         });
 
+        if (onListItemsOrderChange) {
+          onListItemsOrderChange(newDataList); // Pass new data items list to parent after reorder
+        }
+
         return newDataList;
       });
     },
-    [draggedItem]
+    [draggedItem, onListItemsOrderChange]
   );
 
   const renderListItem = useCallback(
-    (data: ListDataItem, index: number) => {
+    (data: DataListItem, index: number) => {
       return (
         <ListItem
           key={data.id}

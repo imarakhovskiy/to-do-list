@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 
 import { IconPlus } from "components/ui-kit";
 import {
@@ -13,7 +13,7 @@ interface AddToDoItemProps {
   onValueSubmit?: (value: string) => void;
 }
 
-export const AddToDoItem = ({ className, onValueSubmit }: AddToDoItemProps) => {
+const AddToDoItem = ({ className, onValueSubmit }: AddToDoItemProps) => {
   const [newToDoItemName, setNewToDoItemName] = useState("");
 
   const onNewToDoItemNameChange = useCallback((value: string) => {
@@ -47,9 +47,16 @@ export const AddToDoItem = ({ className, onValueSubmit }: AddToDoItemProps) => {
         onChange={onNewToDoItemNameChange}
         onKeyUp={onInputKeyUp}
       />
-      <AddToDoItemButton title={strings.addToDoItem}>
+      <AddToDoItemButton
+        title={strings.addToDoItem}
+        onClick={submitNewToDoItemName}
+      >
         <IconPlus />
       </AddToDoItemButton>
     </AddToDoItemWrapper>
   );
 };
+
+const MemoizedComponent = memo(AddToDoItem);
+
+export { MemoizedComponent as AddToDoItem };

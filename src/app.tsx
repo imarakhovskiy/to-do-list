@@ -10,25 +10,20 @@ import { THEME_STORAGE_KEY } from "constants/theme";
 import { GlobalStyle } from "constants/globalStyles";
 
 export const FRIENDS = [
+  { done: false, name: "Add Roboto font" },
+  { done: false, name: "Set up typography" },
+  { done: false, name: "Play with Layout" },
+  { done: false, name: "As a user, I can create a new todo item" },
+  { done: false, name: "As a user, I can delete todo items" },
+  { done: false, name: "As a user, I can mark todo items as done or undone" },
+  { done: false, name: "As a user, I can view all/done list items (filter)" },
   {
-    name: "As a user, I can create a new todo item",
-  },
-  {
-    name: "As a user, I can delete todo items",
-  },
-  {
-    name: "As a user, I can mark todo items as done or undone",
-  },
-  {
-    name: "As a user, I can view all/done list items (filter)",
-  },
-  {
+    done: false,
     name: "As a user, I can view count of the list items (all/done)",
   },
+  { done: false, name: "As a user, I can search todo items by title" },
   {
-    name: "As a user, I can search todo items by title",
-  },
-  {
+    done: false,
     name: "As a user, I can select todo items and do a batch delete/done/undone actions",
   },
 ];
