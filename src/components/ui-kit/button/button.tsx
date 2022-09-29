@@ -5,7 +5,7 @@ import {
   ButtonVariant,
   ButtonShape,
 } from "./types";
-import { StyledButton } from "./styled";
+import { ContentWrapper, StyledButton } from "./styled";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,6 +14,7 @@ export interface ButtonProps
   border?: ButtonBorder;
   variant?: ButtonVariant;
   shape?: ButtonShape;
+  icon?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -23,6 +24,7 @@ export const Button = ({
   border = ButtonBorder.None,
   variant = ButtonVariant.Primary,
   shape,
+  icon: Icon,
   children,
   ...props
 }: ButtonProps) => {
@@ -35,7 +37,7 @@ export const Button = ({
       _variant={variant}
       _shape={shape}
     >
-      {children}
+      {Icon || <ContentWrapper>{children}</ContentWrapper>}
     </StyledButton>
   );
 };

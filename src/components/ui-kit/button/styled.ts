@@ -24,10 +24,13 @@ export interface StyledButtonProps {
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
+  position: relative;
   border-radius: 5px;
   border-style: solid;
-  line-height: 0;
   cursor: pointer;
+  line-height: 0;
+  color: ${({ theme }) => theme.textColor.primary};
+  box-sizing: border-box;
   box-shadow: ${({ theme, _variant }) =>
     `2px 2px 3px 0px ${theme.shadowColor[_variant]}`};
 
@@ -41,4 +44,15 @@ export const StyledButton = styled.button<StyledButtonProps>`
   &:active {
     outline: none;
   }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
+export const ContentWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 `;

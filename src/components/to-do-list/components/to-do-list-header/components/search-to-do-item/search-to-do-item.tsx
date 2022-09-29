@@ -50,13 +50,12 @@ export const SearchToDoItem = ({
       />
       <SearchButton
         title={strings.search.title}
+        icon={<IconSearch />}
         tabIndex={4}
         proportions={ButtonProportion.Small}
         shape={ButtonShape.Circle}
         border={ButtonBorder.Medium}
-      >
-        <IconSearch />
-      </SearchButton>
+      />
     </SearchWrapper>
   );
 };

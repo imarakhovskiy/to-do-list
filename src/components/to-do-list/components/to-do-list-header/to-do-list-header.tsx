@@ -1,7 +1,7 @@
 import { memo } from "react";
 
+import { ButtonBorder, ButtonProportion } from "components/ui-kit";
 import { DoneAllCount, StyledHeader, StyledSearch } from "./styled";
-import { strings } from "../../strings";
 
 interface ToDoListHeaderProps {
   doneItemsCount: number;
@@ -22,8 +22,11 @@ const ToDoListHeader = ({
 }: ToDoListHeaderProps) => {
   return (
     <StyledHeader className={className}>
-      <DoneAllCount>
-        <span>{strings.done}</span>
+      <DoneAllCount
+        border={ButtonBorder.Light}
+        proportions={ButtonProportion.Small}
+      >
+        <span>{String.fromCodePoint(0x2714)}</span>
         {doneItemsCount}/{allItemsCount}
       </DoneAllCount>
       <StyledSearch onSearch={onSearch} />

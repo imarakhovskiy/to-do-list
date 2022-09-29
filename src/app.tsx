@@ -22,7 +22,7 @@ export const FRIENDS = [
     done: true,
     name: "As a user, I can view count of the list items (all/done)",
   },
-  { done: false, name: "As a user, I can search todo items by title" },
+  { done: true, name: "As a user, I can search todo items by title" },
   {
     done: false,
     name: "As a user, I can select todo items and do a batch delete/done/undone actions",

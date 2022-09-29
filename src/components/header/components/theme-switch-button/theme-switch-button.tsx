@@ -36,12 +36,11 @@ export const ThemeSwitchButton = () => {
   return (
     <StyledThemeSwitchButton
       onClick={onThemeToggle}
+      icon={<Icon />}
       title={strings.themeSwitcherTitle}
       border={ButtonBorder.Light}
       shadow={ButtonShadow.Default}
       shape={ButtonShape.Circle}
-    >
-      <Icon />
-    </StyledThemeSwitchButton>
+    />
   );
 };

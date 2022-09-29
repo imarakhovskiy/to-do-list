@@ -63,14 +63,13 @@ const ToDoItem = ({
       {removeItems && (
         <DeleteToDoItemButton
           onClick={deteleItem}
+          icon={<IconDelete variant={IconVariant.Error} />}
           title={strings.deleteItemTitle}
           border={ButtonBorder.Light}
           shadow={ButtonShadow.Default}
           proportions={ButtonProportion.Small}
           variant={ButtonVariant.Error}
-        >
-          <IconDelete variant={IconVariant.Error} />
-        </DeleteToDoItemButton>
+        />
       )}
     </StyledToDoItem>
   );

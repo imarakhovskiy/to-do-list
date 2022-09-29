@@ -3,7 +3,6 @@ export const strings = {
     title: "Add item to the list",
     placeholder: 'Enter new task name, e.g "Meet Julie"',
   },
-  done: "Done: ",
   search: {
     title: "Search in list",
     placeholder: 'e.g "Cook dinner"',

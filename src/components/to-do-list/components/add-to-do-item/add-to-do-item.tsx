@@ -54,11 +54,10 @@ const AddToDoItem = ({ className, onValueSubmit }: AddToDoItemProps) => {
       />
       <AddToDoItemButton
         tabIndex={2}
+        icon={<IconPlus />}
         title={strings.addToDoItem.title}
         onClick={submitNewToDoItemName}
-      >
-        <IconPlus />
-      </AddToDoItemButton>
+      />
     </AddToDoItemWrapper>
   );
 };

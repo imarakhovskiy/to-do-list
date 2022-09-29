@@ -32,6 +32,7 @@ export const StyledInput = styled.input<StyledInputProps>`
   padding: 0.5em;
   line-height: 1;
   color: ${({ theme }) => theme.textColor.primary};
+  background-color: ${({ theme }) => theme.backgroundColor.primary};
   border: none;
   box-sizing: border-box;
   flex-grow: 2;
