@@ -22,13 +22,13 @@ import { strings } from "./strings";
 interface ToDoItemProps {
   itemData: ToDoListItem;
   removeItems?: (idsList: string[]) => void;
-  updateItemsState?: (idsList: string[], newState: boolean) => void;
+  updateItemsStatus?: (idsList: string[], newState: boolean) => void;
 }
 
 const ToDoItem = ({
   itemData,
   removeItems,
-  updateItemsState,
+  updateItemsStatus,
 }: ToDoItemProps) => {
   const deteleItem = useCallback(() => {
     if (!removeItems) {
@@ -38,15 +38,15 @@ const ToDoItem = ({
     removeItems([itemData.id]);
   }, [itemData.id, removeItems]);
 
-  const updateItemState = useCallback(
+  const updateItemStatus = useCallback(
     (newValue: boolean) => {
-      if (!updateItemsState) {
+      if (!updateItemsStatus) {
         return;
       }
 
-      updateItemsState([itemData.id], newValue);
+      updateItemsStatus([itemData.id], newValue);
     },
-    [itemData.id, updateItemsState]
+    [itemData.id, updateItemsStatus]
   );
 
   return (
@@ -55,7 +55,7 @@ const ToDoItem = ({
         checked={itemData.done}
         shape={CheckboxShape.Circle}
         proportions={CheckboxProportion.Large}
-        onChange={updateItemState}
+        onChange={updateItemStatus}
       />
       <ToDoItemDescription title={itemData.name}>
         {itemData.name}

@@ -10,6 +10,7 @@ import {
   ButtonShape,
   IconMoon,
   IconSun,
+  IconVariant,
 } from "components/ui-kit";
 import { strings } from "./strings";
 
@@ -29,14 +30,19 @@ export const ThemeSwitchButton = () => {
   };
 
   const Icon = useMemo(
-    () => (theme === ThemeMode.Light ? IconSun : IconMoon),
+    () =>
+      theme === ThemeMode.Light ? (
+        <IconSun variant={IconVariant.Warning} />
+      ) : (
+        <IconMoon variant={IconVariant.Primary} />
+      ),
     [theme]
   );
 
   return (
     <StyledThemeSwitchButton
       onClick={onThemeToggle}
-      icon={<Icon />}
+      icon={Icon}
       title={strings.themeSwitcherTitle}
       border={ButtonBorder.Light}
       shadow={ButtonShadow.Default}

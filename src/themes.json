@@ -24,7 +24,7 @@
         "warning": "#d68234",
         "error": "#c8280f",
         "primary": "#e3e3e3",
-        "secondary": "cecdcd"
+        "secondary": "#cecdcd"
       },
       "shadowColor": {
         "success": "#138c0a",
@@ -58,7 +58,7 @@
         "warning": "#d68234",
         "error": "#c8280f",
         "primary": "#e3e3e3",
-        "secondary": "cecdcd"
+        "secondary": "#cecdcd"
       },
       "shadowColor": {
         "success": "#138c0a",

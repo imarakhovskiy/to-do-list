@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, memo } from "react";
 
 import {
   ButtonBorder,
@@ -19,10 +19,7 @@ interface SearchToDoItemProps {
 
 // TODO: Think about extracting this logic inside Input
 
-export const SearchToDoItem = ({
-  className,
-  onSearch,
-}: SearchToDoItemProps) => {
+const SearchToDoItem = ({ className, onSearch }: SearchToDoItemProps) => {
   const [searchValue, setSearchValue] = useState("");
 
   const onSearchValueChange = useCallback(
@@ -59,3 +56,7 @@ export const SearchToDoItem = ({
     </SearchWrapper>
   );
 };
+
+const MemoizedComp = memo(SearchToDoItem);
+
+export { MemoizedComp as SearchToDoItem };

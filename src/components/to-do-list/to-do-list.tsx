@@ -19,14 +19,15 @@ interface ToDoListProps {
 
 export const ToDoList = ({ className, data }: ToDoListProps) => {
   const {
-    itemsToDisplay,
     toDoItems,
+    itemsToDisplay,
     doneItemsCount,
-    synchronizeLists,
     addNewItem,
     removeItems,
-    updateItemsState,
     searchItems,
+    synchronizeLists,
+    updateItemsStatus,
+    updateStatusFilter,
   } = useToDoList(data);
 
   const renderToDoListItems = useCallback(
@@ -34,26 +35,27 @@ export const ToDoList = ({ className, data }: ToDoListProps) => {
       <ToDoItem
         itemData={data as ToDoListItem}
         removeItems={removeItems}
-        updateItemsState={updateItemsState}
+        updateItemsStatus={updateItemsStatus}
       />
     ),
-    [removeItems, updateItemsState]
+    [removeItems, updateItemsStatus]
   );
 
   return (
     <StyledCard className={className}>
       {!!toDoItems.length && (
         <StyledHeader
-          onSearch={searchItems}
           doneItemsCount={doneItemsCount}
           allItemsCount={toDoItems.length}
+          onSearch={searchItems}
+          updateStatusFilter={updateStatusFilter}
         />
       )}
       {itemsToDisplay.length ? (
         <StyledToDoList
+          isItemsDraggable
           data={itemsToDisplay}
           onListItemsOrderChange={synchronizeLists}
-          isItemsDraggable
         >
           {renderToDoListItems}
         </StyledToDoList>

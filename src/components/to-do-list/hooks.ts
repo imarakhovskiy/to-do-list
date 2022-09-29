@@ -1,24 +1,60 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 
 import { DataListItem } from "types/list-types";
-import { ListFilter, ToDoListItem } from "./types";
+import {
+  FiltersReducerAction,
+  FiltersReducerActionType,
+  ListFilter,
+  ToDoListItem,
+} from "./types";
 import { getUniqueId } from "utils/getUniqueId";
 import { applyFilters } from "./utils";
 
-const FILTERS_INITIAL_VALUE: ListFilter = {
+const FILTERS_INITIAL_STATE: ListFilter = {
   name: undefined,
-  state: undefined,
+  status: undefined,
 };
+
+function filtersReducer(state: ListFilter, action: FiltersReducerAction) {
+  switch (action.type) {
+    case FiltersReducerActionType.SetNameFilter:
+      const trimmedSearchString = action.payload?.searchString?.trim();
+
+      return {
+        ...state,
+        name: trimmedSearchString
+          ? (el: ToDoListItem) =>
+              el.name.toLowerCase().includes(trimmedSearchString.toLowerCase())
+          : undefined,
+      };
+    case FiltersReducerActionType.SetStatusFilter:
+      const { isActiveStatusDone } = action.payload;
+
+      return {
+        ...state,
+        status:
+          isActiveStatusDone !== undefined
+            ? (el: ToDoListItem) => el.done === isActiveStatusDone
+            : undefined,
+      };
+    case FiltersReducerActionType.ClearAlFilters:
+      return FILTERS_INITIAL_STATE;
+    default:
+      throw new Error();
+  }
+}
 
 export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
   const [toDoItems, setToDoItems] = useState<ToDoListItem[]>(
     data?.map((el) => ({ ...el, id: getUniqueId() })) || []
   );
-  const [activeFilters, setActiveFilter] = useState<ListFilter>(
-    FILTERS_INITIAL_VALUE
-  );
   const [itemsToDisplay, setItemsToDisplay] =
     useState<ToDoListItem[]>(toDoItems);
+
+  const [activeFilters, dispatchActiveFilters] = useReducer(
+    filtersReducer,
+    FILTERS_INITIAL_STATE
+  );
 
   useEffect(() => {
     setItemsToDisplay(applyFilters(toDoItems, activeFilters));
@@ -57,28 +93,33 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
 
   // Search to do items by specific name
   const searchItems = useCallback((searchString: string) => {
-    setActiveFilter((prevActiveFilter) => {
-      const trimmedSearchString = searchString.trim();
-      return {
-        ...prevActiveFilter,
-        name: trimmedSearchString
-          ? (el: ToDoListItem) =>
-              el.name.toLowerCase().includes(trimmedSearchString.toLowerCase())
-          : undefined,
-      };
+    dispatchActiveFilters({
+      type: FiltersReducerActionType.SetNameFilter,
+      payload: { searchString },
     });
   }, []);
 
+  const updateStatusFilter = useCallback(
+    (isActiveStatusDone: boolean | undefined) => {
+      dispatchActiveFilters({
+        type: FiltersReducerActionType.SetStatusFilter,
+        payload: { isActiveStatusDone },
+      });
+    },
+    []
+  );
+
   // Do/Undo items
-  const updateItemsState = useCallback(
-    (idsList: string[], newStateValue: boolean) => {
+  const updateItemsStatus = useCallback(
+    (idsList: string[], newStatusValue: boolean) => {
       const toUpdate = new Set(idsList);
 
       setToDoItems((oldToDoItems) => {
         const updatedToDoItemsList = oldToDoItems.map((item) => {
           if (toUpdate.has(item.id)) {
-            return { ...item, done: newStateValue };
+            return { ...item, done: newStatusValue };
           }
+
           return item;
         });
 
@@ -92,10 +133,11 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
     itemsToDisplay,
     toDoItems,
     doneItemsCount,
-    synchronizeLists,
     addNewItem,
     removeItems,
-    updateItemsState,
     searchItems,
+    synchronizeLists,
+    updateItemsStatus,
+    updateStatusFilter,
   };
 };
