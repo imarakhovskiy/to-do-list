@@ -7,6 +7,7 @@ import {
   ButtonShadow,
   ButtonVariant,
   Checkbox,
+  CheckboxProportion,
   CheckboxShape,
   IconDelete,
   IconVariant,
@@ -53,6 +54,7 @@ const ToDoItem = ({
       <Checkbox
         checked={itemData.done}
         shape={CheckboxShape.Circle}
+        proportions={CheckboxProportion.Large}
         onChange={updateItemState}
       />
       <ToDoItemDescription title={itemData.name}>

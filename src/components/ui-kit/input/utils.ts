@@ -5,12 +5,19 @@ import {
   ThemeProps,
 } from "styled-components";
 
-import { InputBorder, InputProportion, InputShadow, InputShape } from "./types";
+import {
+  InputBorder,
+  InputProportion,
+  InputShadow,
+  InputShape,
+  InputVariant,
+} from "./types";
 import {
   inputStylesByProportionsMap,
   inputStylesByShapeMap,
   inputStylesByBorderMap,
   inputStylesByShadowMap,
+  inputStylesByVariantMap,
 } from "./constants";
 
 export const getInputByProportionStyles = (
@@ -18,6 +25,11 @@ export const getInputByProportionStyles = (
 ): FlattenSimpleInterpolation => {
   return inputStylesByProportionsMap[inputProportions];
 };
+
+export const getInputByVariantStyles = (
+  inputVariant: InputVariant
+): FlattenInterpolation<ThemeProps<DefaultTheme>> =>
+  inputStylesByVariantMap[inputVariant];
 
 export const getInputByShapeStyles = (
   inputShape: InputShape

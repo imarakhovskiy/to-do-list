@@ -5,6 +5,8 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     id: string;
+    font: string[];
+    color: { white: string };
     textColor: {
       success: string;
       warning: string;

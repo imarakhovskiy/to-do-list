@@ -20,5 +20,4 @@ export const DeleteToDoItemButton = styled(Button)`
   flex-shrink: 0;
   flex-grow: 0;
   flex-basis: content;
-  background-color: unset;
 `;

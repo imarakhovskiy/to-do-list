@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import WebFont from "webfontloader";
 import styled, { ThemeProvider as LibThemeProvider } from "styled-components";
 
 import { Header, PageContentWrapper, ToDoList } from "components";
@@ -10,7 +11,7 @@ import { THEME_STORAGE_KEY } from "constants/theme";
 import { GlobalStyle } from "constants/globalStyles";
 
 export const FRIENDS = [
-  { done: false, name: "Add Roboto font" },
+  { done: true, name: "Add Roboto font" },
   { done: false, name: "Set up typography" },
   { done: false, name: "Play with Layout" },
   { done: true, name: "As a user, I can create a new todo item" },
@@ -18,7 +19,7 @@ export const FRIENDS = [
   { done: true, name: "As a user, I can mark todo items as done or undone" },
   { done: false, name: "As a user, I can view all/done list items (filter)" },
   {
-    done: false,
+    done: true,
     name: "As a user, I can view count of the list items (all/done)",
   },
   { done: false, name: "As a user, I can search todo items by title" },
@@ -33,6 +34,16 @@ function App() {
 
   const themes = useMemo(() => {
     const themes = getThemes();
+
+    const fonts = Object.values(themes)
+      .map((theme) => theme.font)
+      .flat();
+
+    WebFont.load({
+      google: {
+        families: Array.from(new Set(fonts)),
+      },
+    });
 
     return themes;
   }, []);

@@ -62,14 +62,26 @@ export const buttonStylesByVariantMap: Record<
   [ButtonVariant.Success]: css`
     background-color: ${({ theme }) => theme.backgroundColor.success};
     border-color: ${({ theme }) => theme.borderColor.success};
+
+    svg {
+      fill: ${({ theme }) => theme.color.white};
+    }
   `,
   [ButtonVariant.Warning]: css`
     background-color: ${({ theme }) => theme.backgroundColor.warning};
     border-color: ${({ theme }) => theme.borderColor.warning};
+
+    svg {
+      fill: ${({ theme }) => theme.color.white};
+    }
   `,
   [ButtonVariant.Error]: css`
     background-color: ${({ theme }) => theme.backgroundColor.error};
     border-color: ${({ theme }) => theme.borderColor.error};
+
+    svg {
+      fill: ${({ theme }) => theme.color.white};
+    }
   `,
 };
 

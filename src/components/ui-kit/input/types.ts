@@ -4,12 +4,23 @@ export enum InputProportion {
   Large = "large",
 }
 
+export enum InputVariant {
+  Success = "success",
+  Warning = "warning",
+  Error = "error",
+  Primary = "primary",
+  Secondary = "secondary",
+}
+
 export enum InputShape {
   Rounded = "rounded",
+  Circle = "circle",
 }
 
 export enum InputBorder {
-  Primary = "primary",
+  Light = "light",
+  Medium = "medium",
+  Bold = "bold",
   None = "none",
 }
 

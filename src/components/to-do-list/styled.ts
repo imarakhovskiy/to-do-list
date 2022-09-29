@@ -1,16 +1,22 @@
 import styled from "styled-components";
 
 import { Card, List, ListItem } from "components/ui-kit";
-import { AddToDoItem } from "./components";
+import { ToDoListHeader } from "./components";
+
+const cardPadding = "4px";
 
 export const StyledCard = styled(Card)`
   display: flex;
-  max-height: 450px;
-  padding: 4px;
+  padding: 0;
+  max-height: 600px;
   overflow-y: auto;
+  overflow-y: overlay;
 `;
 
 export const StyledToDoList = styled(List)`
+  margin-top: 6px;
+  padding: 0 ${cardPadding};
+
   ${ListItem} {
     padding: 4px;
     border-radius: 7px;
@@ -24,8 +30,27 @@ export const StyledToDoList = styled(List)`
   }
 `;
 
-export const StyledAddToDoItem = styled(AddToDoItem)`
-  margin-top: 10px;
+export const AddToDoItemWrapper = styled.div`
+  backdrop-filter: blur(20px);
+  padding: ${cardPadding};
+  box-shadow: ${({ theme }) => `0 2px 10px 0 ${theme.shadowColor.primary}`};
+  margin-top: 6px;
+  position: -webkit-sticky;
   position: sticky;
   bottom: 0;
+`;
+
+export const StyledHeader = styled(ToDoListHeader)`
+  backdrop-filter: blur(20px);
+  padding: ${cardPadding};
+  box-shadow: ${({ theme }) => `0 -2px 10px 0 ${theme.shadowColor.primary}`};
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
+  top: 0;
+`;
+
+export const NoItemsMessage = styled.p`
+  padding: 20px 10px;
+  text-align: center;
 `;

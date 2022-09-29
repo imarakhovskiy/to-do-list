@@ -34,9 +34,10 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
     color: ${({ theme }) => theme.textColor.primary};
     background-color: ${({ theme }) => theme.backgroundColor.main};
-    line-height: 1;
+    min-height: 100vh;
   }
 
   ::-webkit-scrollbar {
@@ -51,5 +52,20 @@ export const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.borderColor.primary} ;
     border-radius: 100px;
+  }
+
+  .wf-loading {  
+    letter-spacing: 0.56px;
+    line-height: 1.2;
+
+    h1 { 
+      visibility: hidden; 
+    }
+  }
+  
+  .wf-active {
+    letter-spacing: 0.6px;
+
+    h1 { visibility: visible; }
   }
 `;

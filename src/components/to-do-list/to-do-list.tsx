@@ -2,8 +2,15 @@ import { useCallback } from "react";
 
 import { ToDoListItem } from "./types";
 import { useToDoList } from "./hooks";
-import { ToDoItem } from "./components";
-import { StyledAddToDoItem, StyledCard, StyledToDoList } from "./styled";
+import { AddToDoItem, ToDoItem } from "./components";
+import {
+  AddToDoItemWrapper,
+  NoItemsMessage,
+  StyledCard,
+  StyledHeader,
+  StyledToDoList,
+} from "./styled";
+import { strings } from "./strings";
 
 interface ToDoListProps {
   className?: string;
@@ -12,14 +19,15 @@ interface ToDoListProps {
 
 export const ToDoList = ({ className, data }: ToDoListProps) => {
   const {
+    itemsToDisplay,
     toDoItems,
+    doneItemsCount,
     synchronizeLists,
     addNewItem,
     removeItems,
     updateItemsState,
+    searchItems,
   } = useToDoList(data);
-
-  console.log("ToDoList Rerender");
 
   const renderToDoListItems = useCallback(
     (data: unknown) => (
@@ -34,14 +42,31 @@ export const ToDoList = ({ className, data }: ToDoListProps) => {
 
   return (
     <StyledCard className={className}>
-      <StyledToDoList
-        data={toDoItems}
-        onListItemsOrderChange={synchronizeLists}
-        isItemsDraggable
-      >
-        {renderToDoListItems}
-      </StyledToDoList>
-      <StyledAddToDoItem onValueSubmit={addNewItem} />
+      {!!toDoItems.length && (
+        <StyledHeader
+          onSearch={searchItems}
+          doneItemsCount={doneItemsCount}
+          allItemsCount={toDoItems.length}
+        />
+      )}
+      {itemsToDisplay.length ? (
+        <StyledToDoList
+          data={itemsToDisplay}
+          onListItemsOrderChange={synchronizeLists}
+          isItemsDraggable
+        >
+          {renderToDoListItems}
+        </StyledToDoList>
+      ) : (
+        <NoItemsMessage>
+          {toDoItems.length
+            ? strings.noItems.satisfyFilters
+            : strings.noItems.inTheList}
+        </NoItemsMessage>
+      )}
+      <AddToDoItemWrapper>
+        <AddToDoItem onValueSubmit={addNewItem} />
+      </AddToDoItemWrapper>
     </StyledCard>
   );
 };

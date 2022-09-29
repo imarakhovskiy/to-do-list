@@ -1,4 +1,10 @@
-import { InputProportion, InputBorder, InputShadow, InputShape } from "./types";
+import {
+  InputProportion,
+  InputBorder,
+  InputShadow,
+  InputShape,
+  InputVariant,
+} from "./types";
 
 import {
   css,
@@ -7,6 +13,7 @@ import {
   ThemeProps,
   DefaultTheme,
 } from "styled-components";
+import { ButtonProportion } from "../button";
 
 export const inputStylesByProportionsMap: Record<
   InputProportion,
@@ -14,15 +21,33 @@ export const inputStylesByProportionsMap: Record<
 > = {
   [InputProportion.Small]: css`
     font-size: 12px;
-    padding: 0.5em;
   `,
   [InputProportion.Medium]: css`
     font-size: 16px;
-    padding: 0.6em;
   `,
   [InputProportion.Large]: css`
     font-size: 22px;
-    padding: 1em;
+  `,
+};
+
+export const inputStylesByVariantMap: Record<
+  InputVariant,
+  FlattenInterpolation<ThemeProps<DefaultTheme>>
+> = {
+  [InputVariant.Primary]: css`
+    border-color: ${({ theme }) => theme.borderColor.primary};
+  `,
+  [InputVariant.Secondary]: css`
+    border-color: ${({ theme }) => theme.borderColor.secondary};
+  `,
+  [InputVariant.Success]: css`
+    border-color: ${({ theme }) => theme.borderColor.success};
+  `,
+  [InputVariant.Warning]: css`
+    border-color: ${({ theme }) => theme.borderColor.warning};
+  `,
+  [InputVariant.Error]: css`
+    border-color: ${({ theme }) => theme.borderColor.error};
   `,
 };
 
@@ -33,16 +58,23 @@ export const inputStylesByShapeMap: Record<
   [InputShape.Rounded]: css`
     border-radius: 10px;
   `,
+  [InputShape.Circle]: css`
+    border-radius: 1.2em;
+  `,
 };
 
 export const inputStylesByBorderMap: Record<
   InputBorder,
   FlattenInterpolation<ThemeProps<DefaultTheme>>
 > = {
-  [InputBorder.Primary]: css`
+  [InputBorder.Light]: css`
     border-width: 1px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.borderColor.primary};
+  `,
+  [InputBorder.Medium]: css`
+    border-width: 2px;
+  `,
+  [InputBorder.Bold]: css`
+    border-width: 4px;
   `,
   [InputBorder.None]: css`
     border: none;
@@ -60,4 +92,13 @@ export const inputStylesByShadowMap: Record<
   [InputShadow.None]: css`
     box-shadow: none;
   `,
+};
+
+export const inputProportionsToButtonMap: Record<
+  InputProportion,
+  ButtonProportion
+> = {
+  [InputProportion.Small]: ButtonProportion.Small,
+  [InputProportion.Medium]: ButtonProportion.Medium,
+  [InputProportion.Large]: ButtonProportion.Large,
 };

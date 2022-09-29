@@ -27,6 +27,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   border-radius: 5px;
   border-style: solid;
   line-height: 0;
+  cursor: pointer;
   box-shadow: ${({ theme, _variant }) =>
     `2px 2px 3px 0px ${theme.shadowColor[_variant]}`};
 

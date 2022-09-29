@@ -11,7 +11,8 @@
     "react-dnd-touch-backend": "16.0.1",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "styled-components": "5.3.5"
+    "styled-components": "5.3.5",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start"
@@ -40,6 +41,7 @@
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
+    "@types/webfontloader": "^1.6.34",
     "typescript": "^4.8.3"
   }
 }

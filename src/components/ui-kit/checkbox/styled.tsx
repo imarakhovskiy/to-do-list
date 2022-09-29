@@ -50,7 +50,7 @@ export const CustomCheckbox = styled.span<CustomCheckboxProps>`
 
   & > svg {
     display: none;
-    fill: white;
+    fill: ${({ theme }) => theme.color.white};
   }
 
   ${CheckboxInput}:checked ~ & {

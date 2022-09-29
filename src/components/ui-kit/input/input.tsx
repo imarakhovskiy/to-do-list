@@ -6,12 +6,22 @@ import React, {
   useState,
 } from "react";
 
-import { InputBorder, InputProportion, InputShadow, InputShape } from "./types";
-import { StyledInput } from "./styled";
+import {
+  InputBorder,
+  InputProportion,
+  InputShadow,
+  InputShape,
+  InputVariant,
+} from "./types";
+import { StyledInput, InputWrapper, ClearButton } from "./styled";
+import { IconClear } from "../icon";
+import { inputProportionsToButtonMap } from "./constants";
 
 interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  clearable?: boolean;
   proportions?: InputProportion;
+  variant?: InputVariant;
   shadow?: InputShadow;
   border?: InputBorder;
   shape?: InputShape;
@@ -20,10 +30,13 @@ interface InputProps
 const Input = (
   {
     proportions = InputProportion.Medium,
+    variant = InputVariant.Primary,
     shadow = InputShadow.None,
     border = InputBorder.None,
     shape,
     value,
+    className,
+    clearable = false,
     children,
     onChange,
     ...props
@@ -46,19 +59,43 @@ const Input = (
     [onChange]
   );
 
+  const onClear = useCallback(() => {
+    setNewValue(() => {
+      const newValue = "";
+
+      onChange && onChange(newValue);
+
+      return newValue;
+    });
+  }, [onChange]);
+
   return (
-    <StyledInput
-      {...props}
-      _proportions={proportions}
+    <InputWrapper
+      _variant={variant}
       _shadow={shadow}
       _border={border}
       _shape={shape}
-      value={inputValue}
-      onChange={onInputValueChange}
-      ref={ref}
+      className={className}
     >
-      {children}
-    </StyledInput>
+      <StyledInput
+        {...props}
+        ref={ref}
+        _proportions={proportions}
+        _clearable={clearable}
+        value={inputValue}
+        onChange={onInputValueChange}
+      >
+        {children}
+      </StyledInput>
+      {clearable && (
+        <ClearButton
+          onClick={onClear}
+          proportions={inputProportionsToButtonMap[proportions]}
+        >
+          <IconClear />
+        </ClearButton>
+      )}
+    </InputWrapper>
   );
 };
 

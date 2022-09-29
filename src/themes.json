@@ -2,6 +2,8 @@
   "data": {
     "light": {
       "id": "001",
+      "font": ["Roboto"],
+      "color": { "white": "#ffffff" },
       "textColor": {
         "success": "#138c0a",
         "warning": "#d68234",
@@ -34,6 +36,8 @@
     },
     "dark": {
       "id": "002",
+      "font": ["Roboto"],
+      "color": { "white": "#ffffff" },
       "textColor": {
         "success": "#138c0a",
         "warning": "#d68234",

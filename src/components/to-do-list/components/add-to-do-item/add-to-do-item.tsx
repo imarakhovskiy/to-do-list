@@ -13,6 +13,8 @@ interface AddToDoItemProps {
   onValueSubmit?: (value: string) => void;
 }
 
+// TODO: Think about extracting this logic inside Input
+
 const AddToDoItem = ({ className, onValueSubmit }: AddToDoItemProps) => {
   const [newToDoItemName, setNewToDoItemName] = useState("");
 
@@ -44,11 +46,15 @@ const AddToDoItem = ({ className, onValueSubmit }: AddToDoItemProps) => {
     <AddToDoItemWrapper className={className}>
       <NewToDoItemNameInput
         value={newToDoItemName}
+        tabIndex={1}
+        autoFocus
+        placeholder={strings.addToDoItem.placeholder}
         onChange={onNewToDoItemNameChange}
         onKeyUp={onInputKeyUp}
       />
       <AddToDoItemButton
-        title={strings.addToDoItem}
+        tabIndex={2}
+        title={strings.addToDoItem.title}
         onClick={submitNewToDoItemName}
       >
         <IconPlus />

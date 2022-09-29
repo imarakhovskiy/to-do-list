@@ -6,12 +6,14 @@ const wrapperBorderRadius = "10px";
 export const AddToDoItemWrapper = styled.div`
   display: flex;
   border: ${({ theme }) => `2px solid ${theme.borderColor.primary}`};
+  background-color: ${({ theme }) => theme.backgroundColor.primary};
   border-radius: ${wrapperBorderRadius};
 `;
 
 export const NewToDoItemNameInput = styled(Input)`
   flex-grow: 2;
-  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 `;
 
 export const AddToDoItemButton = styled(Button)`
