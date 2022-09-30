@@ -4,8 +4,8 @@ import { ThemeMode } from "types/theme";
 import { DEFAULT_THEME } from "constants/theme";
 
 interface ThemeProviderProps {
-  theme?: ThemeMode;
-  changeTheme?: (newTheme: ThemeMode) => void;
+  theme: ThemeMode;
+  changeTheme: (newTheme: ThemeMode) => void;
   children: React.ReactNode;
 }
 

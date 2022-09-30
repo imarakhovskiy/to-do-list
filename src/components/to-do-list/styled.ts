@@ -2,15 +2,25 @@ import styled from "styled-components";
 
 import { Card, List, ListItem } from "components/ui-kit";
 import { ToDoListHeader } from "./components";
+import { device } from "constants/breakpoints";
 
 const cardPadding = "4px";
 
 export const StyledCard = styled(Card)`
   display: flex;
   padding: 0;
-  max-height: 600px;
+  max-height: 650px;
   overflow-y: auto;
   overflow-y: overlay;
+  margin-top: 20px;
+
+  @media ${device.mobileL} {
+    margin-top: 80px;
+  }
+
+  @media ${device.tablet} {
+    margin-top: 120px;
+  }
 `;
 
 export const StyledToDoList = styled(List)`
@@ -30,7 +40,7 @@ export const StyledToDoList = styled(List)`
   }
 `;
 
-export const AddToDoItemWrapper = styled.div`
+export const BottomWrapper = styled.div`
   backdrop-filter: blur(20px);
   padding: ${cardPadding};
   box-shadow: ${({ theme }) => `0 2px 10px 0 ${theme.shadowColor.primary}`};

@@ -1,52 +1,16 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 
 import { DataListItem } from "types/list-types";
-import {
-  FiltersReducerAction,
-  FiltersReducerActionType,
-  ListFilter,
-  ToDoListItem,
-} from "./types";
+import { FiltersReducerActionType, ToDoListItem, ToDoListMode } from "./types";
 import { getUniqueId } from "utils/getUniqueId";
-import { applyFilters } from "./utils";
+import { applyFilters, filtersReducer } from "./utils";
+import { FILTERS_INITIAL_STATE } from "./constants";
 
-const FILTERS_INITIAL_STATE: ListFilter = {
-  name: undefined,
-  status: undefined,
-};
+export const useToDoList = (data?: Omit<ToDoListItem, "id" | "selected">[]) => {
+  const [mode, setMode] = useState(ToDoListMode.Edit);
 
-function filtersReducer(state: ListFilter, action: FiltersReducerAction) {
-  switch (action.type) {
-    case FiltersReducerActionType.SetNameFilter:
-      const trimmedSearchString = action.payload?.searchString?.trim();
-
-      return {
-        ...state,
-        name: trimmedSearchString
-          ? (el: ToDoListItem) =>
-              el.name.toLowerCase().includes(trimmedSearchString.toLowerCase())
-          : undefined,
-      };
-    case FiltersReducerActionType.SetStatusFilter:
-      const { isActiveStatusDone } = action.payload;
-
-      return {
-        ...state,
-        status:
-          isActiveStatusDone !== undefined
-            ? (el: ToDoListItem) => el.done === isActiveStatusDone
-            : undefined,
-      };
-    case FiltersReducerActionType.ClearAlFilters:
-      return FILTERS_INITIAL_STATE;
-    default:
-      throw new Error();
-  }
-}
-
-export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
   const [toDoItems, setToDoItems] = useState<ToDoListItem[]>(
-    data?.map((el) => ({ ...el, id: getUniqueId() })) || []
+    data?.map((el) => ({ ...el, id: getUniqueId(), selected: false })) || []
   );
   const [itemsToDisplay, setItemsToDisplay] =
     useState<ToDoListItem[]>(toDoItems);
@@ -66,6 +30,20 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
     return count;
   }, [toDoItems]);
 
+  const selectedItemsIds = useMemo(() => {
+    if (mode !== ToDoListMode.GroupEdit) {
+      return;
+    }
+
+    return toDoItems.reduce((accum, el) => {
+      if (el.selected) {
+        accum.push(el.id);
+      }
+
+      return accum;
+    }, [] as string[]);
+  }, [mode, toDoItems]);
+
   // Synchronize ToDoList state array with List component after DnD actions
   const synchronizeLists = useCallback(
     (dndListCompInternalState: DataListItem[]) => {
@@ -77,7 +55,12 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
   // Adding new items in To Do list
   const addNewItem = useCallback((newToDoItemName: string) => {
     setToDoItems((oldToDoItems) => [
-      { name: newToDoItemName, done: false, id: getUniqueId() },
+      {
+        name: newToDoItemName,
+        done: false,
+        id: getUniqueId(),
+        selected: false,
+      },
       ...oldToDoItems,
     ]);
   }, []);
@@ -99,6 +82,7 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
     });
   }, []);
 
+  // Show Done/Undone/All items on such option select
   const updateStatusFilter = useCallback(
     (isActiveStatusDone: boolean | undefined) => {
       dispatchActiveFilters({
@@ -109,15 +93,19 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
     []
   );
 
-  // Do/Undo items
+  // Do/Undo or Select/Unselect items by id's
   const updateItemsStatus = useCallback(
-    (idsList: string[], newStatusValue: boolean) => {
+    (
+      idsList: string[],
+      newStatusValue: boolean,
+      fieldName: keyof ToDoListItem
+    ) => {
       const toUpdate = new Set(idsList);
 
       setToDoItems((oldToDoItems) => {
         const updatedToDoItemsList = oldToDoItems.map((item) => {
           if (toUpdate.has(item.id)) {
-            return { ...item, done: newStatusValue };
+            return { ...item, [fieldName]: newStatusValue };
           }
 
           return item;
@@ -129,10 +117,18 @@ export const useToDoList = (data?: Omit<ToDoListItem, "id">[]) => {
     []
   );
 
+  // Change To Do list mode
+  const changeMode = useCallback((newModeValue: ToDoListMode) => {
+    setMode(() => newModeValue);
+  }, []);
+
   return {
-    itemsToDisplay,
+    mode,
     toDoItems,
+    itemsToDisplay,
     doneItemsCount,
+    selectedItemsIds,
+    changeMode,
     addNewItem,
     removeItems,
     searchItems,

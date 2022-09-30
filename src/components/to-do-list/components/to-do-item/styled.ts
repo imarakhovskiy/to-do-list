@@ -1,17 +1,23 @@
 import styled from "styled-components";
 
-import { Button } from "components/ui-kit";
+import { Button, Checkbox } from "components/ui-kit";
 
 export const StyledToDoItem = styled.div`
   display: flex;
   align-items: center;
 `;
 
+export const StyledCheckbox = styled(Checkbox)`
+  flex-grow: 2;
+  flex-shrink: 2;
+  overflow: hidden;
+`;
+
 export const ToDoItemDescription = styled.p`
+  font-size: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  flex-grow: 2;
   padding: 0 15px;
 `;
 

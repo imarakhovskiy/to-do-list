@@ -16,7 +16,6 @@ const List = ({
   onListItemsOrderChange,
 }: ListProps) => {
   const [listItemsData, setListItemsData] = useState(data);
-  console.log("List Rerender");
 
   useEffect(() => {
     setListItemsData(data);

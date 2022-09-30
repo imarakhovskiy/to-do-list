@@ -1,3 +1,4 @@
+export * from "./cancel/icon-cancel";
 export * from "./clear/icon-clear";
 export * from "./delete/icon-delete";
 export * from "./done/icon-done";

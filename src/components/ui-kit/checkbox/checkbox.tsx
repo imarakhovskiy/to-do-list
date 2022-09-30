@@ -53,7 +53,6 @@ export const Checkbox = ({
 
   return (
     <Container className={className} _proportions={proportions}>
-      {label}
       <CheckboxInput
         {...props}
         type="checkbox"
@@ -68,6 +67,7 @@ export const Checkbox = ({
       >
         <CheckedIcon />
       </CustomCheckbox>
+      {label}
     </Container>
   );
 };

@@ -2,6 +2,7 @@ export interface ToDoListItem {
   id: string;
   name: string;
   done: boolean;
+  selected: boolean;
 }
 
 export type FilterFunction = (element: ToDoListItem) => boolean;
@@ -25,4 +26,9 @@ export enum FiltersReducerActionType {
 interface FiltersReducerActionPayload {
   searchString?: string;
   isActiveStatusDone?: boolean;
+}
+
+export enum ToDoListMode {
+  Edit = "edit",
+  GroupEdit = "group_edit",
 }

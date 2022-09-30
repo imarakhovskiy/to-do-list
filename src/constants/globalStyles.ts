@@ -33,11 +33,26 @@ export const GlobalStyle = createGlobalStyle`
     border-spacing: 0;
   }
 
+  html {
+    height: -webkit-fill-available;
+    box-sizing: border-box;
+    height: 100%;
+  }
+
   body {
     font-family: Roboto, Arial, Helvetica, sans-serif;
     color: ${({ theme }) => theme.textColor.primary};
     background-color: ${({ theme }) => theme.backgroundColor.main};
+    box-sizing: border-box;
+    height: 100%;
     min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
+  }
+
+  #root {
+    height: 100%;
+    box-sizing: border-box;
   }
 
   ::-webkit-scrollbar {

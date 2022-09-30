@@ -1,5 +1,8 @@
-import { SearchToDoItem, ToDoItemStatusFilter } from "./components";
-import { StyledHeader } from "./styled";
+import {
+  StyledHeader,
+  StyledToDoItemStatusFilter,
+  StyledSearchToDoItem,
+} from "./styled";
 
 interface ToDoListHeaderProps {
   doneItemsCount: number;
@@ -20,12 +23,12 @@ export const ToDoListHeader = ({
 }: ToDoListHeaderProps) => {
   return (
     <StyledHeader className={className}>
-      <ToDoItemStatusFilter
+      <StyledToDoItemStatusFilter
         doneItemsCount={doneItemsCount}
         allItemsCount={allItemsCount}
         updateStatusFilter={updateStatusFilter}
       />
-      <SearchToDoItem onSearch={onSearch} />
+      <StyledSearchToDoItem onSearch={onSearch} />
     </StyledHeader>
   );
 };

@@ -4,6 +4,7 @@ import { device } from "constants/breakpoints";
 
 export const StyledHeader = styled.nav`
   position: sticky;
+  z-index: 2;
   top: 0;
   padding: 10px;
   display: flex;

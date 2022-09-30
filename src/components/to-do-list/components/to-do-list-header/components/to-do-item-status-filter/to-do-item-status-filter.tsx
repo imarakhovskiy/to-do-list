@@ -15,12 +15,14 @@ import {
 } from "./styled";
 
 interface ToDoItemStatusFilterProps {
+  className?: string;
   allItemsCount: number;
   doneItemsCount: number;
   updateStatusFilter: (isActiveStatusDone: boolean | undefined) => void;
 }
 
 export const ToDoItemStatusFilter = ({
+  className,
   allItemsCount,
   doneItemsCount,
   updateStatusFilter,
@@ -40,7 +42,7 @@ export const ToDoItemStatusFilter = ({
   };
 
   return (
-    <StatusFiltersWrapper>
+    <StatusFiltersWrapper className={className}>
       <StatusFilterButton
         border={ButtonBorder.Light}
         proportions={ButtonProportion.Small}
