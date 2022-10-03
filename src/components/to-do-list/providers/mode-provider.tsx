@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 
 import { ToDoListMode } from "../types";
 
@@ -19,7 +19,9 @@ export const ModeProvider = ({
   changeMode,
 }: ModeProviderProps) => {
   return (
-    <ModeContext.Provider value={{ mode, changeMode }}>
+    <ModeContext.Provider
+      value={useMemo(() => ({ mode, changeMode }), [mode, changeMode])}
+    >
       {children}
     </ModeContext.Provider>
   );

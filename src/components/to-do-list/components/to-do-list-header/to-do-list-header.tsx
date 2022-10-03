@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import {
   StyledHeader,
   StyledToDoItemStatusFilter,
@@ -14,7 +16,7 @@ interface ToDoListHeaderProps {
   updateStatusFilter: (isActiveStatusDone: boolean | undefined) => void;
 }
 
-export const ToDoListHeader = ({
+const ToDoListHeader = ({
   doneItemsCount,
   allItemsCount,
   className,
@@ -32,3 +34,7 @@ export const ToDoListHeader = ({
     </StyledHeader>
   );
 };
+
+const MemoizedComp = memo(ToDoListHeader);
+
+export { MemoizedComp as ToDoListHeader };

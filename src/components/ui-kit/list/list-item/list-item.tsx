@@ -105,6 +105,6 @@ const ListItem = ({
   );
 };
 
-export const StyledListItemComp = styled(ListItem)``;
+const MemoizedComp = styled(ListItem)``;
 
-export { StyledListItemComp as ListItem };
+export { MemoizedComp as ListItem };

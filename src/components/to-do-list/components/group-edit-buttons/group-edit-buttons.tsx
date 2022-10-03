@@ -2,6 +2,7 @@ import { memo } from "react";
 
 import { ToDoListItem, ToDoListMode } from "components/to-do-list/types";
 import {
+  ButtonShadow,
   ButtonVariant,
   IconCancel,
   IconDelete,
@@ -55,6 +56,7 @@ const GroupEditButtons = ({
         <StyledGroupEditButton
           title={strings.groupEdit.delete.title}
           variant={ButtonVariant.Error}
+          shadow={ButtonShadow.Default}
           onClick={deleteSelectedItems}
         >
           {strings.groupEdit.delete.name}
@@ -63,6 +65,7 @@ const GroupEditButtons = ({
         <StyledGroupEditButton
           title={strings.groupEdit.undone.title}
           variant={ButtonVariant.Primary}
+          shadow={ButtonShadow.Default}
           onClick={updateSelectedItemsStatus(false)}
         >
           {strings.groupEdit.undone.name}
@@ -71,6 +74,7 @@ const GroupEditButtons = ({
         <StyledGroupEditButton
           title={strings.groupEdit.done.title}
           variant={ButtonVariant.Success}
+          shadow={ButtonShadow.Default}
           onClick={updateSelectedItemsStatus(true)}
         >
           {strings.groupEdit.done.name}

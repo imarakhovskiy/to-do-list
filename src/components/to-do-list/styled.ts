@@ -9,13 +9,14 @@ const cardPadding = "4px";
 export const StyledCard = styled(Card)`
   display: flex;
   padding: 0;
-  max-height: 650px;
+  max-height: 400px;
   overflow-y: auto;
   overflow-y: overlay;
   margin-top: 20px;
 
   @media ${device.mobileL} {
     margin-top: 80px;
+    max-height: 650px;
   }
 
   @media ${device.tablet} {

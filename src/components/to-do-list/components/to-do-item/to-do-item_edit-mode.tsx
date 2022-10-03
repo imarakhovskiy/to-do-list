@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 
 import { ToDoListItem, ToDoListMode } from "../../types";
 import {
@@ -18,7 +18,7 @@ import {
   StyledToDoItem,
   ToDoItemDescription,
 } from "./styled";
-import { LIST_ITEM_PRESS_TIME_TO_OPEN_GROUP_EDIT } from "../../constants";
+import { OPEN_GROUP_EDIT_LIST_ITEM_PRESS_MS } from "../../constants";
 import { strings } from "./strings";
 
 interface ToDoItemEditModeProps {
@@ -37,7 +37,7 @@ const ToDoItemEditMode = ({
   updateItemsStatus,
 }: ToDoItemEditModeProps) => {
   const { changeMode } = useMode();
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
+  const timeoutId = useRef<NodeJS.Timeout>();
 
   const deteleItem = () => {
     removeItems([itemData.id]);
@@ -51,23 +51,22 @@ const ToDoItemEditMode = ({
   const onMouseHoldedDown = () => {
     changeMode(ToDoListMode.GroupEdit);
     updateItemStatus("selected")(true);
-    setTimeoutId(undefined);
   };
 
   const onMouseDown = () => {
-    setTimeoutId(
-      setTimeout(onMouseHoldedDown, LIST_ITEM_PRESS_TIME_TO_OPEN_GROUP_EDIT)
+    timeoutId.current = setTimeout(
+      onMouseHoldedDown,
+      OPEN_GROUP_EDIT_LIST_ITEM_PRESS_MS
     );
   };
 
   const preventGroupEditModeOpen = useCallback(() => {
-    if (!timeoutId) {
+    if (!timeoutId.current) {
       return;
     }
 
-    clearInterval(timeoutId);
-    setTimeoutId(undefined);
-  }, [timeoutId]);
+    clearInterval(timeoutId.current);
+  }, []);
 
   useEffect(() => {
     return preventGroupEditModeOpen;

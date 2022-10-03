@@ -5,4 +5,4 @@ export const FILTERS_INITIAL_STATE: ListFilter = {
   status: undefined,
 };
 
-export const LIST_ITEM_PRESS_TIME_TO_OPEN_GROUP_EDIT = 700;
+export const OPEN_GROUP_EDIT_LIST_ITEM_PRESS_MS = 700;
