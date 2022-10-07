@@ -1,11 +1,16 @@
-export interface ToDoListItem {
-  id: string;
+import { ToDoItem } from "./helpers/to-do-item";
+import { SELECTED_FIELD_NAME } from "./constants";
+
+export type ToDoListItemId = string;
+
+export interface ToDoListInputItem {
   name: string;
-  done: boolean;
-  selected: boolean;
+  done?: boolean;
 }
 
-export type FilterFunction = (element: ToDoListItem) => boolean;
+export type SelectableToDoItem = ToDoItem & { [SELECTED_FIELD_NAME]: boolean };
+
+export type FilterFunction = (element: SelectableToDoItem) => boolean;
 
 export interface ListFilter {
   name?: FilterFunction;

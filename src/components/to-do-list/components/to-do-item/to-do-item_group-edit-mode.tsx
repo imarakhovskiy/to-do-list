@@ -1,29 +1,31 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
-import { ToDoListItem } from "../../types";
+import { SelectableToDoItem, ToDoListItemId } from "../../types";
 import { CheckboxProportion, CheckboxShape } from "components/ui-kit";
 import { StyledCheckbox, ToDoItemDescription } from "./styled";
+import { SELECTED_FIELD_NAME } from "components/to-do-list/constants";
 
 interface ToDoItemGroupEditModeProps {
-  itemData: ToDoListItem;
-  updateItemsStatus: (
-    idsList: string[],
-    newState: boolean,
-    fieldName: keyof ToDoListItem
-  ) => void;
+  itemData: SelectableToDoItem;
+  selectItems: (idsList: ToDoListItemId[]) => void;
+  unselectItems: (idsList: ToDoListItemId[]) => void;
 }
 
 const ToDoItemGroupEditMode = ({
   itemData,
-  updateItemsStatus,
+  selectItems,
+  unselectItems,
 }: ToDoItemGroupEditModeProps) => {
-  const updateItemStatus = (newValue: boolean) => {
-    updateItemsStatus([itemData.id], newValue, "selected");
-  };
+  const onCheckboxValueChange = useCallback(
+    (newValue: boolean) => {
+      newValue ? selectItems([itemData.id]) : unselectItems([itemData.id]);
+    },
+    [itemData.id, selectItems, unselectItems]
+  );
 
   return (
     <StyledCheckbox
-      checked={itemData.selected}
+      checked={itemData[SELECTED_FIELD_NAME]}
       label={
         <ToDoItemDescription title={itemData.name}>
           {itemData.name}
@@ -31,7 +33,7 @@ const ToDoItemGroupEditMode = ({
       }
       shape={CheckboxShape.Circle}
       proportions={CheckboxProportion.Large}
-      onChange={updateItemStatus}
+      onChange={onCheckboxValueChange}
     />
   );
 };

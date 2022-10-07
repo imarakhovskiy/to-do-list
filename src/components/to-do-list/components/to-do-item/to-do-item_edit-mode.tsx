@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef } from "react";
 
-import { ToDoListItem, ToDoListMode } from "../../types";
+import { SelectableToDoItem, ToDoListItemId, ToDoListMode } from "../../types";
 import {
   ButtonBorder,
   ButtonProportion,
@@ -22,19 +22,19 @@ import { OPEN_GROUP_EDIT_LIST_ITEM_PRESS_MS } from "../../constants";
 import { strings } from "./strings";
 
 interface ToDoItemEditModeProps {
-  itemData: ToDoListItem;
-  removeItems: (idsList: string[]) => void;
-  updateItemsStatus: (
-    idsList: string[],
-    newState: boolean,
-    fieldName: keyof ToDoListItem
-  ) => void;
+  itemData: SelectableToDoItem;
+  removeItems: (idsList: ToDoListItemId[]) => void;
+  selectItems: (idsList: ToDoListItemId[]) => void;
+  markItemsAsDone: (idsList: ToDoListItemId[]) => void;
+  undoItems: (idsList: ToDoListItemId[]) => void;
 }
 
 const ToDoItemEditMode = ({
   itemData,
   removeItems,
-  updateItemsStatus,
+  selectItems,
+  markItemsAsDone,
+  undoItems,
 }: ToDoItemEditModeProps) => {
   const { changeMode } = useMode();
   const timeoutId = useRef<NodeJS.Timeout>();
@@ -43,14 +43,9 @@ const ToDoItemEditMode = ({
     removeItems([itemData.id]);
   };
 
-  const updateItemStatus =
-    (fieldName: keyof ToDoListItem) => (newValue: boolean) => {
-      updateItemsStatus([itemData.id], newValue, fieldName);
-    };
-
   const onMouseHoldedDown = () => {
     changeMode(ToDoListMode.GroupEdit);
-    updateItemStatus("selected")(true);
+    selectItems([itemData.id]);
   };
 
   const onMouseDown = () => {
@@ -67,6 +62,13 @@ const ToDoItemEditMode = ({
 
     clearInterval(timeoutId.current);
   }, []);
+
+  const onCheckboxValueChange = useCallback(
+    (newValue: boolean) => {
+      newValue ? markItemsAsDone([itemData.id]) : undoItems([itemData.id]);
+    },
+    [itemData.id, undoItems, markItemsAsDone]
+  );
 
   useEffect(() => {
     return preventGroupEditModeOpen;
@@ -87,7 +89,7 @@ const ToDoItemEditMode = ({
         }
         shape={CheckboxShape.Circle}
         proportions={CheckboxProportion.Large}
-        onChange={updateItemStatus("done")}
+        onChange={onCheckboxValueChange}
       />
       <DeleteToDoItemButton
         onClick={deteleItem}

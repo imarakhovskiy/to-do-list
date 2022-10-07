@@ -10,11 +10,6 @@ import { getInitialThemeMode } from "utils/getInitialThemeMode";
 import { THEME_STORAGE_KEY } from "constants/theme";
 import { GlobalStyle } from "constants/globalStyles";
 
-const TO_DO_LIST = [
-  { done: false, name: "Fix perfomance issues" },
-  { done: false, name: "Add MobX" },
-];
-
 function App() {
   const [themeMode, setThemeMode] = useState(getInitialThemeMode);
 
@@ -47,7 +42,7 @@ function App() {
       <LibThemeProvider theme={themes[themeMode]}>
         <GlobalStyle />
         <Layout>
-          <ToDoList data={TO_DO_LIST} />
+          <ToDoList />
         </Layout>
       </LibThemeProvider>
     </ThemeProvider>

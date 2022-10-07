@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "mobx": "6.6.2",
+    "mobx": "^6.6.2",
+    "mobx-react-lite": "^3.4.0",
     "react": "18.2.0",
     "react-device-detect": "2.2.2",
     "react-dnd": "^16.0.1",

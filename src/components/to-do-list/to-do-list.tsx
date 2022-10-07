@@ -1,7 +1,9 @@
-import { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
+import { observer } from "mobx-react-lite";
 
-import { ToDoListItem, ToDoListMode } from "./types";
+import { SelectableToDoItem, ToDoListInputItem, ToDoListMode } from "./types";
 import { useToDoList } from "./hooks";
+import { ToDoListManager } from "./helpers";
 import { ModeProvider } from "./providers/mode-provider";
 import {
   AddToDoItem,
@@ -20,81 +22,102 @@ import { strings } from "./strings";
 
 interface ToDoListProps {
   className?: string;
-  data?: Omit<ToDoListItem, "id" | "selected">[];
+  data?: ToDoListInputItem[];
 }
 
-export const ToDoList = ({ className, data }: ToDoListProps) => {
+const ToDoList = ({ className, data }: ToDoListProps) => {
+  const toDoListManager = useRef<ToDoListManager>(new ToDoListManager(data));
+
+  useEffect(() => {
+    data && toDoListManager.current.reinit(data);
+  }, [toDoListManager, data]);
+
   const {
     mode,
-    toDoItems,
     itemsToDisplay,
     doneItemsCount,
-    selectedItemsIds,
     changeMode,
-    addNewItem,
-    removeItems,
     searchItems,
-    synchronizeLists,
-    updateItemsStatus,
     updateStatusFilter,
-  } = useToDoList(data);
+  } = useToDoList(toDoListManager.current.toDoItems);
 
-  const renderToDoListItems = useCallback(
-    (data: unknown) => (
-      <>
-        {mode === ToDoListMode.Edit && (
-          <ToDoItemEditMode
-            itemData={data as ToDoListItem}
-            removeItems={removeItems}
-            updateItemsStatus={updateItemsStatus}
-          />
-        )}
-        {mode === ToDoListMode.GroupEdit && (
-          <ToDoItemGroupEditMode
-            itemData={data as ToDoListItem}
-            updateItemsStatus={updateItemsStatus}
-          />
-        )}
-      </>
-    ),
-    [mode, removeItems, updateItemsStatus]
+  const renderToDoListItems: {
+    (data: unknown): JSX.Element;
+    cache: WeakMap<SelectableToDoItem, Record<ToDoListMode, React.ReactNode>>;
+  } = useCallback(
+    (() => {
+      function render(data: unknown) {
+        const cachedValue = render.cache.get(data as SelectableToDoItem);
+
+        if (!cachedValue) {
+          render.cache.set(data as SelectableToDoItem, {
+            [ToDoListMode.Edit]: (
+              <ToDoItemEditMode
+                itemData={data as SelectableToDoItem}
+                removeItems={toDoListManager.current.removeItems}
+                selectItems={toDoListManager.current.selectItems}
+                markItemsAsDone={toDoListManager.current.markItemsAsDone}
+                undoItems={toDoListManager.current.undoItems}
+              />
+            ),
+            [ToDoListMode.GroupEdit]: (
+              <ToDoItemGroupEditMode
+                itemData={data as SelectableToDoItem}
+                selectItems={toDoListManager.current.selectItems}
+                unselectItems={toDoListManager.current.unselectItems}
+              />
+            ),
+          });
+        }
+
+        return render.cache.get(data as SelectableToDoItem)?.[
+          mode
+        ] as JSX.Element;
+      }
+
+      render.cache = new WeakMap<
+        SelectableToDoItem,
+        Record<ToDoListMode, React.ReactNode>
+      >();
+
+      return render;
+    })(),
+    [mode]
   );
 
   return (
     <ModeProvider mode={mode} changeMode={changeMode}>
       <StyledCard className={className}>
-        {!!toDoItems.length && (
+        {!!toDoListManager.current.toDoItems.length && (
           <StyledHeader
             doneItemsCount={doneItemsCount}
-            allItemsCount={toDoItems.length}
+            allItemsCount={toDoListManager.current.toDoItems.length}
             onSearch={searchItems}
             updateStatusFilter={updateStatusFilter}
           />
         )}
         {itemsToDisplay.length ? (
-          <StyledToDoList
-            isItemsDraggable
-            data={itemsToDisplay}
-            onListItemsOrderChange={synchronizeLists}
-          >
+          <StyledToDoList data={itemsToDisplay}>
             {renderToDoListItems}
           </StyledToDoList>
         ) : (
           <NoItemsMessage>
-            {toDoItems.length
+            {toDoListManager.current.toDoItems.length
               ? strings.noItems.satisfyFilters
               : strings.noItems.inTheList}
           </NoItemsMessage>
         )}
         <BottomWrapper>
           {mode === ToDoListMode.Edit && (
-            <AddToDoItem onValueSubmit={addNewItem} />
+            <AddToDoItem onValueSubmit={toDoListManager.current.addItem} />
           )}
           {mode === ToDoListMode.GroupEdit && (
             <GroupEditButtons
-              selectedItemsIds={selectedItemsIds as string[]}
-              updateItemsStatus={updateItemsStatus}
-              removeItems={removeItems}
+              selectedItemsIds={toDoListManager.current.selectedItemsIds}
+              unselectItems={toDoListManager.current.unselectItems}
+              markItemsAsDone={toDoListManager.current.markItemsAsDone}
+              undoItems={toDoListManager.current.undoItems}
+              removeItems={toDoListManager.current.removeItems}
             />
           )}
         </BottomWrapper>
@@ -102,3 +125,7 @@ export const ToDoList = ({ className, data }: ToDoListProps) => {
     </ModeProvider>
   );
 };
+
+const ObserverableToDoList = observer(ToDoList);
+
+export { ObserverableToDoList as ToDoList };

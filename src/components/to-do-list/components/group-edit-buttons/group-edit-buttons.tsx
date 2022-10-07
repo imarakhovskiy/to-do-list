@@ -1,6 +1,6 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
-import { ToDoListItem, ToDoListMode } from "components/to-do-list/types";
+import { ToDoListItemId, ToDoListMode } from "components/to-do-list/types";
 import {
   ButtonShadow,
   ButtonVariant,
@@ -19,29 +19,34 @@ import {
 import { strings } from "components/to-do-list/strings";
 
 interface GroupEditButtonsProps {
-  selectedItemsIds: string[];
-  removeItems: (idsList: string[]) => void;
-  updateItemsStatus: (
-    idsList: string[],
-    newState: boolean,
-    fieldName: keyof ToDoListItem
-  ) => void;
+  selectedItemsIds: ToDoListItemId[];
+  removeItems: (idsList: ToDoListItemId[]) => void;
+  unselectItems: (idsList: ToDoListItemId[]) => void;
+  markItemsAsDone: (idsList: ToDoListItemId[]) => void;
+  undoItems: (idsList: ToDoListItemId[]) => void;
 }
 
 const GroupEditButtons = ({
   selectedItemsIds,
   removeItems,
-  updateItemsStatus,
+  unselectItems,
+  markItemsAsDone,
+  undoItems,
 }: GroupEditButtonsProps) => {
   const { changeMode } = useMode();
 
   const exitFromGroupEditMode = () => {
     changeMode(ToDoListMode.Edit);
-    updateItemsStatus(selectedItemsIds, false, "selected");
+    unselectItems(selectedItemsIds);
   };
 
-  const updateSelectedItemsStatus = (newValue: boolean) => () => {
-    updateItemsStatus(selectedItemsIds, newValue, "done");
+  const markSelectedItemsAsDone = () => {
+    markItemsAsDone(selectedItemsIds);
+    exitFromGroupEditMode();
+  };
+
+  const markSelectedItemsAsUndone = () => {
+    undoItems(selectedItemsIds);
     exitFromGroupEditMode();
   };
 
@@ -66,7 +71,7 @@ const GroupEditButtons = ({
           title={strings.groupEdit.undone.title}
           variant={ButtonVariant.Primary}
           shadow={ButtonShadow.Default}
-          onClick={updateSelectedItemsStatus(false)}
+          onClick={markSelectedItemsAsUndone}
         >
           {strings.groupEdit.undone.name}
           <IconInProgress />
@@ -75,7 +80,7 @@ const GroupEditButtons = ({
           title={strings.groupEdit.done.title}
           variant={ButtonVariant.Success}
           shadow={ButtonShadow.Default}
-          onClick={updateSelectedItemsStatus(true)}
+          onClick={markSelectedItemsAsDone}
         >
           {strings.groupEdit.done.name}
           <IconDone />

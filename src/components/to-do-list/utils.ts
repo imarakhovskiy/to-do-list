@@ -2,11 +2,14 @@ import {
   FiltersReducerAction,
   FiltersReducerActionType,
   ListFilter,
-  ToDoListItem,
+  SelectableToDoItem,
 } from "./types";
 import { FILTERS_INITIAL_STATE } from "./constants";
 
-export const applyFilters = (toDoList: ToDoListItem[], filters: ListFilter) => {
+export const applyFilters = (
+  toDoList: SelectableToDoItem[],
+  filters: ListFilter
+) => {
   const activeFilters = Object.values(filters).filter((f) => !!f);
 
   if (!activeFilters.length) {
@@ -27,7 +30,7 @@ export function filtersReducer(
       return {
         ...state,
         name: trimmedSearchString
-          ? (el: ToDoListItem) =>
+          ? (el: SelectableToDoItem) =>
               el.name.toLowerCase().includes(trimmedSearchString.toLowerCase())
           : undefined,
       };
@@ -38,7 +41,7 @@ export function filtersReducer(
         ...state,
         status:
           isActiveStatusDone !== undefined
-            ? (el: ToDoListItem) => el.done === isActiveStatusDone
+            ? (el: SelectableToDoItem) => el.done === isActiveStatusDone
             : undefined,
       };
     case FiltersReducerActionType.ClearAlFilters:
